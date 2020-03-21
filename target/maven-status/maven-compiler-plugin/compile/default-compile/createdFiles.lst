@@ -1,1 +1,5 @@
-com\example\appengine\springboot\SpringbootApplication.class
+com\covoid\tracker\covidtracker\dao\DeviceRepository.class
+com\covoid\tracker\covidtracker\controller\DeviceController.class
+com\covoid\tracker\covidtracker\entity\Device.class
+com\covoid\tracker\covidtracker\controller\PingContoller.class
+com\covoid\tracker\covidtracker\CovidTrackerApplication.class
