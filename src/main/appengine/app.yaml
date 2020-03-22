@@ -13,13 +13,12 @@
 # limitations under the License.
 
 # [START gae_java11_helloworld_yaml]
-runtime: java8
+runtime: java11
 instance_class: B1
 basic_scaling:
   max_instances: 1
 
 # Explicitly set the memory limit and maximum heap size for the Spring Boot app
 env_variables:
-  JAVA_TOOL_OPTIONS: "-XX:MaxRAM=256m -XX:ActiveProcessorCount=2 -Xmx32m"
-  env.profile: GCP
+  JAVA_TOOL_OPTIONS: "-Denv.profile=GCP -XX:MaxRAM=256m -XX:ActiveProcessorCount=2 -Xmx32m"
 # [END gae_java11_helloworld_yaml]
