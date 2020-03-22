@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.covoid.tracker.covidtracker.secrets.SecurityKeyManager;
+import com.covoid.tracker.covidtracker.secrets.SecretKeyManager;
 
 @SpringBootApplication
 @Configuration
