@@ -14,11 +14,11 @@
 	<name>covid-tracker</name>
 	<description>Demo project for Spring Boot</description>
 
-  <properties>
-      <maven.compiler.target>8</maven.compiler.target>
-      <maven.compiler.source>8</maven.compiler.source>
-	  <app.deploy.projectId>app.deploy.projectId</app.deploy.projectId>
-  </properties>
+	<properties>
+		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.source>8</maven.compiler.source>
+		<app.deploy.projectId>app.deploy.projectId</app.deploy.projectId>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -28,6 +28,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-secretmanager</artifactId>
+			<version>0.3.0</version>
 		</dependency>
 
 		<dependency>
@@ -43,23 +48,23 @@
 		</dependency>
 	</dependencies>
 
-<build>
-    <plugins>
-      <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>appengine-maven-plugin</artifactId>
-        <version>2.2.0</version>
-        <configuration>
-          <projectId>GCLOUD_CONFIG</projectId>
-          <version>covid-tracker</version>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>2.2.0</version>
+				<configuration>
+					<projectId>GCLOUD_CONFIG</projectId>
+					<version>covid-tracker</version>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
