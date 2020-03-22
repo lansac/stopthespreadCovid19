@@ -18,4 +18,9 @@ public class PingContoller {
 		return "Hello World";
 	}
 
+	@GetMapping("/")
+	public String home() {
+		return greeting();
+        }
+
 }
