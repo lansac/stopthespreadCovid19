@@ -9,6 +9,6 @@ import com.covoid.tracker.covidtracker.entity.DeviceHistory;
 
 public interface DeviceHistoryRepository extends MongoRepository<DeviceHistory, String> {
 
-	public Optional<List<DeviceHistory>> findByMacId(String macId);
+	public Optional<List<DeviceHistory>> findByDeviceId(String macId);
 
 }
