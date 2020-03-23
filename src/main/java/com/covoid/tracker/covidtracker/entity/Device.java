@@ -3,97 +3,71 @@ package com.covoid.tracker.covidtracker.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-public class Device {
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	@Id
-	private String id;
+@Data
+@NoArgsConstructor
+public class Device
+{
 
-	@Indexed(unique = false)
-	private String macId;
-	private String notificationId;
+  @Id
+  private String id;
 
-	private String phoneNumber;
-	
-	// TODO - Instead of these lousy boleans can we have one status field here?
+  @Indexed(unique = false)
+  private String macId;
+  private String notificationId;
 
-	/**
-	 * Marked to true when a person is infected and then false when a person has recovered; gives the current status only.
-	 */
-	private boolean isInfected = false;
+  private String phoneNumber;
 
-	/**
-	 * Marked to true when a person is quarantined or has suspect symptoms and false when person is out of quarantine
-	 */
-	private boolean isSuspected = false;
+  private String salt;
 
-	/**
-	 * Marked to true if the person has been notified; the flag will reset once the notification is no longer valid.
-	 */
-	private boolean isNotified = false;
+  private String keyVersion;
 
-	public Device() {
-	}
+  private String originalMacId;
 
-	public Device(String macId, String notificationId, String phoneNumber) {
-		this.macId = macId;
-		this.notificationId = notificationId;
-		this.phoneNumber = phoneNumber;
-	}
+  private String originalPhoneNumber;
 
-	public String getId() {
-		return id;
-	}
+  // TODO - Instead of these lousy boleans can we have one status field here?
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  /**
+   * Marked to true when a person is infected and then false when a person has recovered; gives the current status only.
+   */
+  private boolean isInfected = false;
 
-	public String getMacId() {
-		return macId;
-	}
+  /**
+   * Marked to true when a person is quarantined or has suspect symptoms and false when person is out of quarantine
+   */
+  private boolean isSuspected = false;
 
-	public void setMacId(String macId) {
-		this.macId = macId;
-	}
+  /**
+   * Marked to true if the person has been notified; the flag will reset once the notification is no longer valid.
+   */
+  private boolean isNotified = false;
 
-	public String getNotificationId() {
-		return notificationId;
-	}
+  public Device(String macId, String notificationId, String phoneNumber, String keyVersion, String originalMacId,
+    String originalPhoneNumber)
+  {
+    this.macId = macId;
+    this.notificationId = notificationId;
+    this.phoneNumber = phoneNumber;
+    this.originalMacId= originalMacId;
+    this.originalPhoneNumber = originalPhoneNumber;
+  }
 
-	public void setNotificationId(String notificationId) {
-		this.notificationId = notificationId;
-	}
+  public void markAsSuspect()
+  {
+    this.isSuspected = true;
+  }
 
-	public boolean isInfected() {
-		return isInfected;
-	}
+  public void markAsInfected()
+  {
+    this.isInfected = true;
+  }
 
-	public void setInfected(boolean isInfected) {
-		this.isInfected = isInfected;
-	}
-
-	public boolean isSuspected() {
-		return isSuspected;
-	}
-
-	public void setSuspected(boolean isSuspected) {
-		this.isSuspected = isSuspected;
-	}
-
-	public boolean isNotified() {
-		return isNotified;
-	}
-
-	public void setNotified(boolean isNotified) {
-		this.isNotified = isNotified;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+  public void markAsNotified()
+  {
+    this.isNotified = true;
+  }
 
 }
