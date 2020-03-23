@@ -6,102 +6,69 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class DeviceProximity {
+import com.covoid.tracker.covidtracker.dto.DeviceProximityDTO;
 
-	@Id
-	private String id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	@Indexed(unique = false)
-	private String macId;
+@Data
+@NoArgsConstructor
+public class DeviceProximity
+{
 
-	@Indexed(unique = false)
-	private String proximityDeviceMacId;
+  @Id
+  private String id;
 
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
-	private Date startTime;
+  @Indexed(unique = false)
+  private String deviceId;
 
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
-	private Date endTime;
-	
-	// TODO - Can we have duration here; which is computed field of start time - end time? Or we can get this from the query.
+  @Indexed(unique = false)
+  private String proximityDeviceMacId;
 
-	/**
-	 * Represents the blue tooth signal strength. The lesser value the close proximity.
-	 */
-	private int bluetoothStrength;
+  @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  private Date startTime;
 
-	/**
-	 * Represents the Geo-Location; will be populated when location tracking is enabled. Represents the latitude and longitude
-	 */
-	private double[] geoPosition;
+  @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+  private Date endTime;
 
-	/**
-	 * Represents the distance from the source to the target.
-	 */
-	private int geoDistance;
+  private String originalProximityDeviceMacId;
 
-	public double[] getGeoPosition() {
-		return geoPosition;
-	}
+  // TODO - Can we have duration here; which is computed field of start time - end time? Or we can get this from the
+  // query.
 
-	public void setGeoPosition(double[] geoPosition) {
-		this.geoPosition = geoPosition;
-	}
+  /**
+   * Represents the blue tooth signal strength. The lesser value the close proximity.
+   */
+  private int bluetoothStrength;
 
-	public String getId() {
-		return id;
-	}
+  /**
+   * Represents the Geo-Location; will be populated when location tracking is enabled. Represents the latitude and
+   * longitude
+   */
+  private double[] geoPosition;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  /**
+   * Represents the distance from the source to the target.
+   */
+  private int geoDistance;
+  
+  private String keyVersion;
 
-	public String getMacId() {
-		return macId;
-	}
-
-	public void setMacId(String macId) {
-		this.macId = macId;
-	}
-
-	public String getProximityDeviceMacId() {
-		return proximityDeviceMacId;
-	}
-
-	public void setProximityDeviceMacId(String proximityDeviceMacId) {
-		this.proximityDeviceMacId = proximityDeviceMacId;
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public int getBluetoothStrength() {
-		return bluetoothStrength;
-	}
-
-	public void setBluetoothStrength(int bluetoothStrength) {
-		this.bluetoothStrength = bluetoothStrength;
-	}
-
-	public int getGeoDistance() {
-		return geoDistance;
-	}
-
-	public void setGeoDistance(int geoDistance) {
-		this.geoDistance = geoDistance;
-	}
+  public DeviceProximity(DeviceProximityDTO deviceProximityDto, String deviceId, String encrytedProximityDeviceMacId,
+    boolean isStoreOriginalMacId, String keyVersion)
+  {
+    this.deviceId = deviceId;
+    this.startTime = deviceProximityDto.getStartTime();
+    this.endTime = deviceProximityDto.getEndTime();
+    if (isStoreOriginalMacId)
+    {
+      this.originalProximityDeviceMacId = deviceProximityDto.getProximityDeviceMacId();
+    }
+    this.proximityDeviceMacId = encrytedProximityDeviceMacId;
+    this.bluetoothStrength = deviceProximityDto.getBluetoothStrength();
+    this.geoPosition = deviceProximityDto.getGeoPosition();
+    this.geoDistance = deviceProximityDto.getGeoDistance();
+    this.keyVersion = keyVersion;
+  }
 
 }

@@ -10,7 +10,7 @@ public interface SecretKeyManager
    * @param key
    * @return
    */
-  public String getSecretValue(String key) throws SecretAccessException;
+  public SecretValueWithVersion getSecretValue(String key) throws SecretAccessException;
   
   /**
    * This method gets the Secret for a given version
@@ -19,7 +19,7 @@ public interface SecretKeyManager
    * @return
    * @throws SecretAccessException
    */
-  public String getSecretValue(String secretId, String version) throws SecretAccessException;
+  public SecretValueWithVersion getSecretValue(String secretId, String version) throws SecretAccessException;
   
   
 

@@ -1,32 +1,16 @@
-package com.covoid.tracker.covidtracker.entity;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+package com.covoid.tracker.covidtracker.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-public class Device
+public class DeviceDTO
 {
-
-  @Id
   private String id;
 
-  @Indexed(unique = false)
   private String macId;
   private String notificationId;
 
   private String phoneNumber;
-
-  private String salt;
-
-  private String keyVersion;
-
-  private String originalMacId;
-
-  private String originalPhoneNumber;
 
   // TODO - Instead of these lousy boleans can we have one status field here?
 
@@ -45,29 +29,11 @@ public class Device
    */
   private boolean isNotified = false;
 
-  public Device(String macId, String notificationId, String phoneNumber, String keyVersion, String originalMacId,
-    String originalPhoneNumber)
+  public DeviceDTO(String macId, String notificationId, String phoneNumber)
   {
     this.macId = macId;
     this.notificationId = notificationId;
     this.phoneNumber = phoneNumber;
-    this.originalMacId= originalMacId;
-    this.originalPhoneNumber = originalPhoneNumber;
-  }
-
-  public void markAsSuspect()
-  {
-    this.isSuspected = true;
-  }
-
-  public void markAsInfected()
-  {
-    this.isInfected = true;
-  }
-
-  public void markAsNotified()
-  {
-    this.isNotified = true;
   }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.covoid.tracker.covidtracker.exceptions.SecurityException;
 import com.covoid.tracker.covidtracker.secrets.SecretAccessException;
 import com.covoid.tracker.covidtracker.secrets.SecretKeyManager;
+import com.covoid.tracker.covidtracker.secrets.SecretValueWithVersion;
 import com.covoid.tracker.covidtracker.security.util.EncryptDecryptUtil;
 
 /**
@@ -20,6 +21,8 @@ public class DataSecurityManager
 
   private String keyForSecret = "encrypt-key";
 
+  private String salt = "Salt";
+
   /**
    * This method encrypts the data passed as text by using the SALT key
    * 
@@ -28,10 +31,12 @@ public class DataSecurityManager
    * @throws SecretAccessException
    * @throws SecurityException
    */
-  public String encryptData(String plainText, String salt) throws SecurityException, SecretAccessException
+  public EncryptedValueWithKeyVersion encryptData(String plainText) throws SecurityException, SecretAccessException
   {
-    String encryptedText = EncryptDecryptUtil.encrypt(plainText, secretKeyManager.getSecretValue(keyForSecret), salt);
-    return encryptedText;
+    SecretValueWithVersion secretWithVersion = secretKeyManager.getSecretValue(keyForSecret);
+    String encryptedText = EncryptDecryptUtil.encrypt(plainText,
+        secretWithVersion.getSecretValue(), salt);
+    return new EncryptedValueWithKeyVersion(encryptedText, secretWithVersion.getSecretVersion());
   }
 
   /**
@@ -43,11 +48,10 @@ public class DataSecurityManager
    * @throws SecretAccessException
    * @throws SecurityException
    */
-  public String decryptData(String encryptedText, String version, String salt)
-      throws SecurityException, SecretAccessException
+  public String decryptData(String encryptedText, String version) throws SecurityException, SecretAccessException
   {
     String plainText = EncryptDecryptUtil.decrypt(encryptedText,
-        secretKeyManager.getSecretValue(keyForSecret, version), salt);
+        secretKeyManager.getSecretValue(keyForSecret, version).getSecretValue(), salt);
     return plainText;
   }
 
@@ -59,9 +63,9 @@ public class DataSecurityManager
    * @throws SecretAccessException
    * @throws SecurityException
    */
-  public String decryptData(String encryptedText, String salt) throws SecurityException, SecretAccessException
+  public String decryptData(String encryptedText) throws SecurityException, SecretAccessException
   {
-    return decryptData(encryptedText, "latest", salt);
+    return decryptData(encryptedText, "latest");
   }
 
 }

@@ -9,8 +9,8 @@ import com.covoid.tracker.covidtracker.entity.DeviceProximity;
 
 public interface DeviceProximityRepository extends MongoRepository<DeviceProximity, String> {
 
-	public Optional<List<DeviceProximity>> findByMacId(String macId);
+	public Optional<List<DeviceProximity>> findByDeviceId(String deviceId);
 	
-	public long deleteByMacId(String macId);
+	public long deleteByDeviceId(String deviceId);
 
 }

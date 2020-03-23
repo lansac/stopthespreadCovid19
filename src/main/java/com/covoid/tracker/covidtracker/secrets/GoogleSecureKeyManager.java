@@ -23,19 +23,20 @@ public class GoogleSecureKeyManager implements SecretKeyManager
   private SecretManagerServiceClient secretManagerClient = null;
 
   @Override
-  public String getSecretValue(String secretId) throws SecretAccessException
+  public SecretValueWithVersion getSecretValue(String secretId) throws SecretAccessException
   {
     return getSecretValue(secretId, "latest");
   }
   
   @Override
-  public String getSecretValue(String secretId, String version) throws SecretAccessException
+  public SecretValueWithVersion getSecretValue(String secretId, String version) throws SecretAccessException
   {
     SecretVersionName secretVersionName = SecretVersionName.of(projectId, secretId, "latest");
     AccessSecretVersionRequest request = AccessSecretVersionRequest.newBuilder().setName(secretVersionName.toString())
         .build();
     AccessSecretVersionResponse response = secretManagerClient.accessSecretVersion(request);
-    return response.getPayload().getData().toStringUtf8();
+    //TODO get the version from the response instead of hardcoding as "1"
+    return new SecretValueWithVersion(response.getPayload().getData().toStringUtf8(), "1");
   }
 
   @PostConstruct

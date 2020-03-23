@@ -32,11 +32,5 @@ public class PingContoller
   {
     return greeting();
   }
-  
-  @GetMapping(path="/secret/{keyName}")
-  public String secret(@PathVariable String keyName) throws SecretAccessException
-  {
-    return securityKeyManager.getSecretValue(keyName);
-  }
 
 }

@@ -18,16 +18,16 @@ public class LocalSecureKeyManager implements SecretKeyManager
   private Environment environment;
 
   @Override
-  public String getSecretValue(String key)
+  public SecretValueWithVersion getSecretValue(String key)
   {
-    return environment.getProperty(key);
+    return new SecretValueWithVersion(environment.getProperty(key), "1") ;
   }
   
   @Override
-  public String getSecretValue(String key, String version)
+  public SecretValueWithVersion getSecretValue(String key, String version)
   {
     // No version support in properties
-    return environment.getProperty(key);
+    return new SecretValueWithVersion(environment.getProperty(key), "1") ;
   }
 
 }
